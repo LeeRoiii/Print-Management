@@ -3,14 +3,10 @@ import { Container, Typography, Button } from '@mui/material';
 
 const HelpAndSupport: React.FC = () => {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" style={{ padding: '20px' }}>
             <Typography variant="h4" gutterBottom>
                 Help and Support
             </Typography>
-
-
-
-
             <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
                 Contact Support
             </Typography>

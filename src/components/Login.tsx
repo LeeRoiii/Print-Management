@@ -11,7 +11,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false); // New state for Remember Me
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,20 +25,22 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
-        setLoading(true); // Set loading to true when starting the submit
+        setLoading(true);
 
         // Simulate a login process
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         if (username === 'Admin' && password === 'Admin') {
             onLogin(username);
-            localStorage.setItem('isLoggedIn', 'true');
+            if (rememberMe) {
+                localStorage.setItem('isLoggedIn', 'true');
+            }
             navigate('/OrderDashboard');
         } else {
             setError('Invalid credentials. Please try again.');
         }
 
-        setLoading(false); // Reset loading state after the process
+        setLoading(false);
     };
 
     return (
@@ -60,7 +63,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Enter Admin"
-                            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 transition duration-200"
+                            className={`w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 transition duration-200 ${
+                                username ? '' : 'border-red-500'
+                            }`}
                             required
                         />
                     </div>
@@ -75,7 +80,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Enter Password"
-                                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 transition duration-200"
+                                className={`w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500 transition duration-200 ${
+                                    password ? '' : 'border-red-500'
+                                }`}
                                 required
                             />
                             <button 
@@ -87,14 +94,29 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                             </button>
                         </div>
                     </div>
+                    <div className="flex items-center mt-4">
+                        <input 
+                            type="checkbox"
+                            id="rememberMe"
+                            checked={rememberMe}
+                            onChange={() => setRememberMe(!rememberMe)}
+                            className="mr-2"
+                        />
+                        <label htmlFor="rememberMe" className="text-gray-700 text-sm">
+                            Remember Me
+                        </label>
+                    </div>
                     <div className="flex items-baseline justify-between mt-6">
                         <button 
                             type="submit" 
                             className={`px-6 py-2 w-full ${loading ? 'bg-gray-400' : 'bg-blue-600'} text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline transition duration-200 flex items-center justify-center`}
-                            disabled={loading} // Disable button when loading
+                            disabled={loading}
                         >
                             {loading ? (
-                                <span>Loading...</span>
+                                <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v2a6 6 0 100 12v2a8 8 0 01-8-8z"/>
+                                </svg>
                             ) : (
                                 <>
                                     <LogIn className="mr-2 h-5 w-5" />

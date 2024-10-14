@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Search, Calendar, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface AuditLogEntry {
-  id: number;
   action: string;
   timestamp: string;
 }
@@ -13,17 +12,17 @@ const AuditLog: React.FC = () => {
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortColumn, setSortColumn] = useState<'id' | 'action' | 'timestamp'>('id');
+  const [sortColumn, setSortColumn] = useState<'action' | 'timestamp'>('action');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const sampleLogs: AuditLogEntry[] = [
-      { id: 1, action: 'User logged in', timestamp: '2024-10-01T10:00:00Z' },
-      { id: 2, action: 'User logged out', timestamp: '2024-10-02T11:30:00Z' },
-      { id: 3, action: 'Created a new order', timestamp: '2024-10-03T09:15:00Z' },
-      { id: 4, action: 'Updated order status', timestamp: '2024-10-04T14:45:00Z' },
-      { id: 5, action: 'Deleted an order', timestamp: '2024-10-05T16:00:00Z' },
+      { action: 'User logged in', timestamp: '2024-10-01T10:00:00Z' },
+      { action: 'User logged out', timestamp: '2024-10-02T11:30:00Z' },
+      { action: 'Created a new order', timestamp: '2024-10-03T09:15:00Z' },
+      { action: 'Updated order status', timestamp: '2024-10-04T14:45:00Z' },
+      { action: 'Deleted an order', timestamp: '2024-10-05T16:00:00Z' },
     ];
     setLogs(sampleLogs);
     setFilteredLogs(sampleLogs);
@@ -40,9 +39,7 @@ const AuditLog: React.FC = () => {
     });
 
     filtered.sort((a, b) => {
-      if (sortColumn === 'id') {
-        return sortDirection === 'asc' ? a.id - b.id : b.id - a.id;
-      } else if (sortColumn === 'action') {
+      if (sortColumn === 'action') {
         return sortDirection === 'asc' ? a.action.localeCompare(b.action) : b.action.localeCompare(a.action);
       } else {
         return sortDirection === 'asc' ? a.timestamp.localeCompare(b.timestamp) : b.timestamp.localeCompare(a.timestamp);
@@ -52,7 +49,7 @@ const AuditLog: React.FC = () => {
     setFilteredLogs(filtered);
   };
 
-  const handleSort = (column: 'id' | 'action' | 'timestamp') => {
+  const handleSort = (column: 'action' | 'timestamp') => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
@@ -66,9 +63,9 @@ const AuditLog: React.FC = () => {
   }, [sortColumn, sortDirection, logs, startDate, endDate, searchQuery]);
 
   return (
-    <div className="bg-white text-gray-800 min-h-screen p-8">
+    <div className="bg-white text-gray-800 min-h-screen p-4 md:p-8">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-900">Audit Log</h1>
-      
+
       <div className="mb-8">
         <button
           onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -77,7 +74,7 @@ const AuditLog: React.FC = () => {
           <Filter size={18} className="mr-2" />
           {isFilterOpen ? 'Hide Filters' : 'Show Filters'}
         </button>
-        
+
         {isFilterOpen && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-100 p-4 rounded-lg">
             <div className="relative">
@@ -113,16 +110,16 @@ const AuditLog: React.FC = () => {
           </div>
         )}
       </div>
-      
+
       <div className="overflow-x-auto shadow-md rounded-lg">
-        <table className="w-full bg-white">
+        <table className="min-w-full bg-white">
           <thead className="bg-gray-50">
             <tr>
-              {['id', 'action', 'timestamp'].map((column) => (
+              {['action', 'timestamp'].map((column) => (
                 <th
                   key={column}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleSort(column as 'id' | 'action' | 'timestamp')}
+                  className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleSort(column as 'action' | 'timestamp')}
                 >
                   <div className="flex items-center">
                     {column.charAt(0).toUpperCase() + column.slice(1)}
@@ -135,13 +132,18 @@ const AuditLog: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredLogs.map((log) => (
-              <tr key={log.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{log.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{log.action}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(log.timestamp).toLocaleString()}</td>
-              </tr>
-            ))}
+            {filteredLogs.map((log, index) => {
+              const logDate = new Date(log.timestamp);
+              const formattedDate = logDate.toLocaleDateString();
+              const formattedTime = logDate.toLocaleTimeString();
+
+              return (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{log.action}</td>
+                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{formattedDate} - {formattedTime}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

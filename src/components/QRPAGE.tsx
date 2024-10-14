@@ -16,7 +16,7 @@ const QRPAGE: React.FC = () => {
         setLoading(true);
         if (canvasRef.current) {
             QRCode.toCanvas(canvasRef.current, orderFormURL, { errorCorrectionLevel: 'H' }, (error: any) => {
-                setLoading(false);
+                setLoading(false); // Ensure loading stops after attempt
                 if (error) {
                     console.error(error);
                     setMessage('Failed to generate QR code.');

@@ -14,9 +14,10 @@ import {
     DialogTitle,
     AppBar,
     Toolbar,
+    Fade,
 } from '@mui/material';
 import { Print as PrintIcon } from '@mui/icons-material';
-import NormalPrintForm from './NormalPrintForm'; // Import the new component
+import NormalPrintForm from './NormalPrintForm'; 
 
 interface PrintJob {
     title: string;
@@ -124,34 +125,36 @@ const OrderForm: React.FC = () => {
                     .filter(job => job.available) // Only show available jobs
                     .map((job, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                            <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
-                                <CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                                        <Box
-                                            sx={{
-                                                bgcolor: job.color,
-                                                borderRadius: '50%',
-                                                p: 2,
-                                                mr: 2,
-                                            }}
-                                        >
-                                            <PrintIcon sx={{ color: 'white', fontSize: 40 }} />
+                            <Fade in timeout={500}>
+                                <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+                                    <CardContent>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                            <Box
+                                                sx={{
+                                                    bgcolor: job.color,
+                                                    borderRadius: '50%',
+                                                    p: 2,
+                                                    mr: 2,
+                                                }}
+                                            >
+                                                <PrintIcon sx={{ color: 'white', fontSize: 40 }} />
+                                            </Box>
+                                            <Typography variant="h6">{job.title}</Typography>
                                         </Box>
-                                        <Typography variant="h6">{job.title}</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {job.description}
-                                    </Typography>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => handleOrder(job)}
-                                        sx={{ mt: 2 }}
-                                    >
-                                        Order Now
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {job.description}
+                                        </Typography>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleOrder(job)}
+                                            sx={{ mt: 2 }}
+                                        >
+                                            Order Now
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </Fade>
                         </Grid>
                     ))}
             </Grid>
