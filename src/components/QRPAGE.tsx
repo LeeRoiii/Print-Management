@@ -51,6 +51,7 @@ const QRPAGE: React.FC = () => {
     };
 
     const handleCopyLink = () => {
+        // Copying the current orderFormURL to the clipboard
         navigator.clipboard.writeText(orderFormURL).then(() => {
             setMessage('Link copied to clipboard!');
         }).catch(err => {
