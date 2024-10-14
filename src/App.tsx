@@ -20,10 +20,10 @@ const App: React.FC = () => {
         const userData = localStorage.getItem('user');
         setIsLoggedIn(!!userData);
         setLoading(false);
-    }, []); // Only run once on mount
+    }, []); 
 
     useEffect(() => {
-        if (loading) return; // Skip if still loading
+        if (loading) return;
 
         // Navigate based on login state and location
         const userData = localStorage.getItem('user');

@@ -32,7 +32,7 @@ const OrderForm: React.FC = () => {
     const [printJobs, setPrintJobs] = useState<PrintJob[]>([]);
     const [openNormalPrint, setOpenNormalPrint] = useState(false); // For Normal Print form
     const [customerName, setCustomerName] = useState<string>('');
-    const [openNameDialog, setOpenNameDialog] = useState<boolean>(false); // Initially false
+    const [openNameDialog, setOpenNameDialog] = useState<boolean>(false);
 
     useEffect(() => {
         const storedJobs = localStorage.getItem('printJobs');
@@ -52,12 +52,12 @@ const OrderForm: React.FC = () => {
             if (currentTime - storedTimestamp > 24 * 60 * 60 * 1000) {
                 localStorage.removeItem('customerName');
                 localStorage.removeItem('nameTime');
-                setOpenNameDialog(true); // Open dialog if expired
+                setOpenNameDialog(true); 
             } else {
-                setCustomerName(storedName); // Set customer name
+                setCustomerName(storedName); 
             }
         } else {
-            setOpenNameDialog(true); // Open dialog if no name stored
+            setOpenNameDialog(true); 
         }
     }, []);
 
@@ -69,7 +69,7 @@ const OrderForm: React.FC = () => {
             console.log(`Ordered: ${job.title}`);
         }
     };
-
+    //edit 
     const handleNormalPrintSubmit = (details: any) => {
         // Handle the submission of the normal print details including files
         console.log('Normal Print Order Details:', details);
