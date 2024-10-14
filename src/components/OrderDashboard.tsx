@@ -30,7 +30,7 @@ interface OrderDashboardProps {
     onLogout: () => void;
 }
 
-const OrderDashboard: React.FC<OrderDashboardProps> = ({ onLogout }) => {
+const OrderDashboard: React.FC<OrderDashboardProps> = ({ }) => {
     const [orders, setOrders] = useState<Order[]>(sampleOrders);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);

@@ -16,7 +16,7 @@ import { Line, Bar } from 'react-chartjs-2';
 ChartJS.register(LineElement, PointElement, LinearScale, Title, Tooltip, Legend, BarElement, CategoryScale);
 
 const AnalyticsDashboard: React.FC = () => {
-  const [timeFrame, setTimeFrame] = useState<string>('monthly');
+  const [] = useState<string>('monthly');
 
   // Sample data for the charts
   const orderData = {
@@ -32,28 +32,6 @@ const AnalyticsDashboard: React.FC = () => {
     ],
   };
 
-  const barData = {
-    labels: ['Category A', 'Category B', 'Category C', 'Category D'],
-    datasets: [
-      {
-        label: 'Metrics',
-        data: [5, 10, 15, 20],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   // New job types data
   const jobTypeData = {

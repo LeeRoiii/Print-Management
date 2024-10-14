@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, ShoppingBag, User, BarChart, QrCode, Menu, FileText, File, Settings } from 'lucide-react';
+import { LogOut, ShoppingBag, User, BarChart, QrCode, Menu, FileText, File } from 'lucide-react';
 
 const Sidebar = ({ onLogout }: { onLogout: () => void }) => {
     const [user, setUser] = useState<{ name: string } | null>(null);

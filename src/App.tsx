@@ -60,7 +60,9 @@ const App: React.FC = () => {
                     <div className="flex-1 overflow-y-auto">
                         <Routes>
                             <Route path="/" element={<Navigate to="/OrderDashboard" replace />} />
-                            <Route path="/OrderDashboard" element={<OrderDashboard />} />
+                            <Route path="/OrderDashboard" element={<OrderDashboard onLogout={function (): void {
+                                throw new Error('Function not implemented.');
+                            } } />} />
                             <Route path="/AnalyticsDashboard" element={<AnalyticsDashboard />} />
                             <Route path="/QRPAGE" element={<QRPAGE />} />
                             <Route path="/Services" element={<Services/>} />
